@@ -10,20 +10,12 @@ public class Result {
 
         errors = new ArrayList<>();
         alerts = new ArrayList<>();
-        informations = new ArrayList<>();
+        information = new ArrayList<>();
 
-    }
-
-    public EStatus getStatus() {
-        return status;
     }
 
     public void setStatus(EStatus status) {
         this.status = status;
-    }
-
-    public boolean isReadingDone() {
-        return readingDone;
     }
 
     public void setReadingDone(boolean readingDone) {
@@ -34,31 +26,19 @@ public class Result {
         return errors;
     }
 
-    public void setErrors(List<String> errors) {
-        this.errors = errors;
-    }
-
     public List<String> getAlerts() {
         return alerts;
     }
 
-    public void setAlerts(List<String> alerts) {
-        this.alerts = alerts;
-    }
-
-    public List<String> getInformations() {
-        return informations;
-    }
-
-    public void setInformations(List<String> informations) {
-        this.informations = informations;
+    public List<String> getInformation() {
+        return information;
     }
 
     private EStatus status;
     private boolean readingDone;
-    private List<String> errors;
-    private List<String> alerts;
-    private List<String> informations;
+    private final List<String> errors;
+    private final List<String> alerts;
+    private final List<String> information;
 }
 
 

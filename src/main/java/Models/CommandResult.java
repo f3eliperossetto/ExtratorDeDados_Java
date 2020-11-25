@@ -3,7 +3,7 @@ package Models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandResult<TFileRegistry>{
+public class CommandResult<TFileRegistry> {
 
     public CommandResult() {
         result = new Result();

@@ -2,6 +2,7 @@ package Abstractions;
 
 import Enums.ERegistryType;
 import Models.CommandHandler;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,16 +31,16 @@ public abstract class Handler<TFileRegistry> implements IHandler<TFileRegistry> 
     }
 
     public Handler() {
-      registry = new ArrayList<>();
-      commands = new ArrayList<>();
-      setBuildingFile();
+        registry = new ArrayList<>();
+        commands = new ArrayList<>();
+        setBuildingFile();
     }
 
-    public void addRecord(){
-       registry.add(currentRegistry);
+    public void addRecord() {
+        registry.add(currentRegistry);
     }
 
-    public void resetRecords(){
+    public void resetRecords() {
         registry = new ArrayList<>();
     }
 

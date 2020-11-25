@@ -10,9 +10,9 @@ public class BankDataHandler extends Handler<BankDataFile> {
     @Override
     public void setBuildingFile() {
 
-        addCommand(this::ehTipoRegistroCliente,this::PopulaCliente, ERegistryType.MainObject);
-        addCommand(this::ehTipoRegistroFinanceito,this::PopulaFinanceiro);
-        addCommand(this::ehTipoRegistroDocumento,this::PopulaDocumento);
+        addCommand(this::isClientRegistry, this::fillClient, ERegistryType.MainObject);
+        addCommand(this::isFinancialRegistry, this::fillFinancialRegistry);
+        addCommand(this::isDocumentRegistry, this::fillDocumentRegistry);
 
     }
 
@@ -21,27 +21,27 @@ public class BankDataHandler extends Handler<BankDataFile> {
         return new BankDataFile();
     }
 
-    private boolean ehTipoRegistroCliente(String linhaArquivo){
-        return linhaArquivo.startsWith("00");
+    private boolean isClientRegistry(String line) {
+        return line.startsWith("00");
     }
 
-    private void PopulaCliente(String linha){
-        currentRegistry.fillData(linha);
+    private void fillClient(String line) {
+        currentRegistry.fillData(line);
     }
 
-    private boolean ehTipoRegistroFinanceito(String linhaArquivo){
-        return linhaArquivo.startsWith("02");
+    private boolean isFinancialRegistry(String line) {
+        return line.startsWith("02");
     }
 
-    private void PopulaFinanceiro(String linha){
-       currentRegistry.addFinancialData(linha);
+    private void fillFinancialRegistry(String line) {
+        currentRegistry.addFinancialData(line);
     }
 
-    private boolean ehTipoRegistroDocumento(String linhaArquivo){
-        return linhaArquivo.startsWith("01");
+    private boolean isDocumentRegistry(String line) {
+        return line.startsWith("01");
     }
 
-    private void PopulaDocumento(String linha){
-        currentRegistry.getDocument().fillData(linha);
+    private void fillDocumentRegistry(String line) {
+        currentRegistry.getDocument().fillData(line);
     }
 }
