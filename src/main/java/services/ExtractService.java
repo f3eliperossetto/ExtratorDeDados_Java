@@ -53,7 +53,7 @@ public class ExtractService<T> implements IExtract<T> {
 
     private void runCommand(CommandResult<T> result, int cont, String lineArchive, CommandHandler command) {
         try {
-            if (command.getRegistryType() == InstanceRegistryHandler.CREATE_NEW_REGISTRY_INSTANCE) {
+            if (command.getInstanceRegistryHandler() == InstanceRegistryHandler.CREATE_NEW_REGISTRY_INSTANCE) {
                 dataFileHandler.set(dataFileHandler::getNewInstance);
                 dataFileHandler.add();
             }

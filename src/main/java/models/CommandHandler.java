@@ -7,16 +7,16 @@ import enums.InstanceRegistryHandler;
 
 public class CommandHandler {
 
-    public CommandHandler(Predicate<String> checkLineData, Action<String> fillObject, InstanceRegistryHandler registryType) {
+    public CommandHandler(Predicate<String> checkLineData, Action<String> fillObject, InstanceRegistryHandler instanceRegistryHandler) {
         this.checkLineData = checkLineData;
         this.fillObject = fillObject;
-        this.registryType = registryType;
+        this.instanceRegistryHandler = instanceRegistryHandler;
     }
 
 
     private final Predicate<String> checkLineData;
     private final Action<String> fillObject;
-    private final InstanceRegistryHandler registryType;
+    private final InstanceRegistryHandler instanceRegistryHandler;
 
     public Predicate<String> getCheckLineData() {
         return checkLineData;
@@ -26,8 +26,8 @@ public class CommandHandler {
         return fillObject;
     }
 
-    public InstanceRegistryHandler getRegistryType() {
-        return registryType;
+    public InstanceRegistryHandler getInstanceRegistryHandler() {
+        return instanceRegistryHandler;
     }
 
 }
