@@ -1,13 +1,13 @@
 package models;
 
-import enums.ERegistryType;
+import enums.InstanceRegistryHandler;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class CommandHandler {
 
-    public CommandHandler(Predicate<String> checkLineData, Consumer<String> fillObject, ERegistryType registryType) {
+    public CommandHandler(Predicate<String> checkLineData, Consumer<String> fillObject, InstanceRegistryHandler registryType) {
         this.checkLineData = checkLineData;
         this.fillObject = fillObject;
         this.registryType = registryType;
@@ -16,7 +16,7 @@ public class CommandHandler {
 
     private final Predicate<String> checkLineData;
     private final Consumer<String> fillObject;
-    private final ERegistryType registryType;
+    private final InstanceRegistryHandler registryType;
 
     public Predicate<String> getCheckLineData() {
         return checkLineData;
@@ -26,7 +26,7 @@ public class CommandHandler {
         return fillObject;
     }
 
-    public ERegistryType getRegistryType() {
+    public InstanceRegistryHandler getRegistryType() {
         return registryType;
     }
 

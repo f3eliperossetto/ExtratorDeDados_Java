@@ -1,6 +1,6 @@
 package Tests.Service;
 
-import enums.ERegistryType;
+import enums.InstanceRegistryHandler;
 import abstractions.Handler;
 import FileModels.BankDataFile;
 
@@ -12,7 +12,7 @@ public class BankDataHandler extends Handler<BankDataFile> {
 
     @Override
     public void setBuildingFile() {
-        addCommand((line)->line.startsWith(clientData), (line)->registry.fillData(line), ERegistryType.MAIN_OBJECT);
+        addCommand((line)->line.startsWith(clientData), (line)->registry.fillData(line), InstanceRegistryHandler.CREATE_NEW_REGISTRY_INSTANCE);
         addCommand((line)->line.startsWith(financialData), (line)->registry.addFinancialData(line));
         addCommand((line)->line.startsWith(documentData), (line)->registry.getDocument().fillData(line));
     }

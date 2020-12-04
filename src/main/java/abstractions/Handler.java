@@ -1,7 +1,7 @@
 package abstractions;
 
 import delegators.Func;
-import enums.ERegistryType;
+import enums.InstanceRegistryHandler;
 import models.CommandHandler;
 
 import java.util.ArrayList;
@@ -45,11 +45,11 @@ public abstract class Handler<T> implements IHandler<T> {
         registries = new ArrayList<>();
     }
 
-    public void addCommand(Predicate<String> checkLineData, Consumer<String> getRecordsFromLine, ERegistryType newInstance) {
-        commands.add(new CommandHandler(checkLineData, getRecordsFromLine, newInstance));
+    public void addCommand(Predicate<String> checkLineData, Consumer<String> getRecordsFromLine, InstanceRegistryHandler instanceRegistryHandler) {
+        commands.add(new CommandHandler(checkLineData, getRecordsFromLine, instanceRegistryHandler));
     }
 
     public void addCommand(Predicate<String> checkKineData, Consumer<String> getRecordsFromLine) {
-        commands.add(new CommandHandler(checkKineData, getRecordsFromLine, ERegistryType.RECORD));
+        commands.add(new CommandHandler(checkKineData, getRecordsFromLine, InstanceRegistryHandler.DO_NOT_CREATE_INSTANCE));
     }
 }

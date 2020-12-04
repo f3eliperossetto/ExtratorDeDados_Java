@@ -1,6 +1,6 @@
 package services;
 
-import enums.ERegistryType;
+import enums.InstanceRegistryHandler;
 import enums.EStatus;
 import abstractions.Handler;
 import models.CommandHandler;
@@ -52,7 +52,7 @@ public class ExtractService<T> implements IExtract<T> {
 
     private void runCommand(CommandResult<T> result, int cont, String lineArchive, CommandHandler command) {
         try {
-            if (command.getRegistryType() == ERegistryType.MAIN_OBJECT) {
+            if (command.getRegistryType() == InstanceRegistryHandler.CREATE_NEW_REGISTRY_INSTANCE) {
                 handler.setRegistry(handler::newInstance);
                 handler.addRecord();
             }
