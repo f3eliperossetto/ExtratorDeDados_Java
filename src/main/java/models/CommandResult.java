@@ -1,9 +1,9 @@
-package Models;
+package models;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandResult<TFileRegistry> {
+public class CommandResult<T> {
 
     public CommandResult() {
         result = new Result();
@@ -14,13 +14,13 @@ public class CommandResult<TFileRegistry> {
         return result;
     }
 
-    public List<TFileRegistry> getData() {
+    public List<T> getData() {
         return data;
     }
 
-    private List<TFileRegistry> data;
+    private List<T> data;
 
-    public void setData(List<TFileRegistry> data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 

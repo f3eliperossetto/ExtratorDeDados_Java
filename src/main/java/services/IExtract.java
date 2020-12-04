@@ -1,6 +1,6 @@
-package Services;
+package services;
 
-import Models.CommandResult;
+import models.CommandResult;
 
 public interface IExtract<T> {
     CommandResult<T> loadDataFromFile(String path);

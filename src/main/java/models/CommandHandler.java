@@ -1,6 +1,6 @@
-package Models;
+package models;
 
-import Enums.ERegistryType;
+import enums.ERegistryType;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -13,9 +13,10 @@ public class CommandHandler {
         this.registryType = registryType;
     }
 
-    private Predicate<String> checkLineData;
-    private Consumer<String> fillObject;
-    private ERegistryType registryType;
+
+    private final Predicate<String> checkLineData;
+    private final Consumer<String> fillObject;
+    private final ERegistryType registryType;
 
     public Predicate<String> getCheckLineData() {
         return checkLineData;

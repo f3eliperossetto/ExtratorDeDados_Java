@@ -1,6 +1,6 @@
-package Models;
+package models;
 
-import Enums.EStatus;
+import enums.EStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,14 @@ public class Result {
 
     public List<String> getInformation() {
         return information;
+    }
+
+    public boolean getIsReadingDone() {
+        return readingDone;
+    }
+
+    public EStatus getStatus() {
+        return status;
     }
 
     private EStatus status;

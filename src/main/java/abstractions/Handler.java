@@ -1,7 +1,8 @@
-package Abstractions;
+package abstractions;
 
-import Enums.ERegistryType;
-import Models.CommandHandler;
+import delegators.Func;
+import enums.ERegistryType;
+import models.CommandHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,15 +10,15 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public abstract class Handler<TFileRegistry> implements IHandler<TFileRegistry> {
+public abstract class Handler<T> implements IHandler<T> {
 
-    protected TFileRegistry currentRegistry;
-    private List<TFileRegistry> registry;
+    protected T registry;
+    private List<T> registries;
     private final List<CommandHandler> commands;
 
     @Override
-    public List<TFileRegistry> getRegistry() {
-        return registry;
+    public List<T> getRegistries() {
+        return registries;
     }
 
     @Override
@@ -26,22 +27,22 @@ public abstract class Handler<TFileRegistry> implements IHandler<TFileRegistry> 
     }
 
     @Override
-    public void setCurrentRegistry(TFileRegistry currentRegistry) {
-        this.currentRegistry = currentRegistry;
+    public void setRegistry(Func<T> func) {
+        this.registry = func.invoke();
     }
 
-    public Handler() {
-        registry = new ArrayList<>();
+    protected Handler() {
+        registries = new ArrayList<>();
         commands = new ArrayList<>();
         setBuildingFile();
     }
 
     public void addRecord() {
-        registry.add(currentRegistry);
+        registries.add(registry);
     }
 
     public void resetRecords() {
-        registry = new ArrayList<>();
+        registries = new ArrayList<>();
     }
 
     public void addCommand(Predicate<String> checkLineData, Consumer<String> getRecordsFromLine, ERegistryType newInstance) {
@@ -49,6 +50,6 @@ public abstract class Handler<TFileRegistry> implements IHandler<TFileRegistry> 
     }
 
     public void addCommand(Predicate<String> checkKineData, Consumer<String> getRecordsFromLine) {
-        commands.add(new CommandHandler(checkKineData, getRecordsFromLine, ERegistryType.Record));
+        commands.add(new CommandHandler(checkKineData, getRecordsFromLine, ERegistryType.RECORD));
     }
 }
