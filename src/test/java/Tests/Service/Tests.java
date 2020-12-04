@@ -1,6 +1,6 @@
 package Tests.Service;
 
-import enums.EStatus;
+import enums.StatusImport;
 import services.IExtract;
 import models.CommandResult;
 import services.ExtractService;
@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class Tests {
     public Tests() {
-        service = new ExtractService<>(new BankDataHandler());
+        service = new ExtractService<>(new BankDataFileHandler());
     }
 
     private final String path = new File("src/test/resources").getAbsolutePath() + "\\";
@@ -28,7 +28,7 @@ public class Tests {
         assertEquals(0, result.getResult().getAlerts().size());
         assertEquals(0, result.getResult().getErrors().size());
         assertEquals(1, (result.getResult().getInformation().size()));
-        assertEquals(EStatus.SUCCESS,result.getResult().getStatus());
+        assertEquals(StatusImport.SUCCESS,result.getResult().getStatus());
     }
 
 }

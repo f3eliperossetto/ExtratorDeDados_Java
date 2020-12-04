@@ -1,6 +1,6 @@
 package models;
 
-import enums.EStatus;
+import enums.StatusImport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class Result {
 
     }
 
-    public void setStatus(EStatus status) {
+    public void setStatus(StatusImport status) {
         this.status = status;
     }
 
@@ -38,11 +38,11 @@ public class Result {
         return readingDone;
     }
 
-    public EStatus getStatus() {
+    public StatusImport getStatus() {
         return status;
     }
 
-    private EStatus status;
+    private StatusImport status;
     private boolean readingDone;
     private final List<String> errors;
     private final List<String> alerts;

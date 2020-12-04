@@ -1,8 +1,8 @@
 package services;
 
+import abstractions.DataFileHandler;
 import enums.InstanceRegistryHandler;
-import enums.EStatus;
-import abstractions.Handler;
+import enums.StatusImport;
 import models.CommandHandler;
 import models.CommandResult;
 
@@ -11,10 +11,10 @@ import java.io.FileReader;
 import java.util.Optional;
 
 public class ExtractService<T> implements IExtract<T> {
-    private final Handler<T> handler;
+    private final DataFileHandler<T> dataFileHandler;
 
-    public ExtractService(Handler<T> handler) {
-        this.handler = handler;
+    public ExtractService(DataFileHandler<T> dataFileHandler) {
+        this.dataFileHandler = dataFileHandler;
     }
 
     @Override
@@ -23,8 +23,8 @@ public class ExtractService<T> implements IExtract<T> {
         int cont = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            if (!handler.getRegistries().isEmpty())
-                handler.resetRecords();
+            if (!dataFileHandler.getAll().isEmpty())
+                dataFileHandler.dispose();
 
             String lineArchive;
 
@@ -32,7 +32,7 @@ public class ExtractService<T> implements IExtract<T> {
 
                 String finalLineArchive = lineArchive;
 
-                Optional<CommandHandler> command = handler.getCommands().stream()
+                Optional<CommandHandler> command = dataFileHandler.getCommands().stream()
                         .filter(cm -> cm.getCheckLineData().test(finalLineArchive)).findFirst();
 
                 if (command.isPresent())
@@ -46,15 +46,15 @@ public class ExtractService<T> implements IExtract<T> {
             result.getResult().getErrors().add("Line " + cont + ex.getMessage());
         }
         setExtractionStatus(result);
-        result.setData(handler.getRegistries());
+        result.setData(dataFileHandler.getAll());
         return result;
     }
 
     private void runCommand(CommandResult<T> result, int cont, String lineArchive, CommandHandler command) {
         try {
             if (command.getRegistryType() == InstanceRegistryHandler.CREATE_NEW_REGISTRY_INSTANCE) {
-                handler.setRegistry(handler::newInstance);
-                handler.addRecord();
+                dataFileHandler.set(dataFileHandler::getNewInstance);
+                dataFileHandler.add();
             }
             command.getFillObject().accept(lineArchive);
         } catch (Exception ex) {
@@ -65,15 +65,15 @@ public class ExtractService<T> implements IExtract<T> {
     private void setExtractionStatus(CommandResult<T> result) {
         if (!result.getResult().getErrors().isEmpty() || !result.getResult().getAlerts().isEmpty()) {
             if (!result.getResult().getErrors().isEmpty() || (result.getResult().getAlerts().isEmpty())) {
-                result.getResult().setStatus(EStatus.ERROR);
+                result.getResult().setStatus(StatusImport.ERROR);
                 result.getResult().setReadingDone(false);
             } else {
-                result.getResult().setStatus(EStatus.ALERTS);
+                result.getResult().setStatus(StatusImport.ALERTS);
                 result.getResult().setReadingDone(true);
                 result.getResult().getInformation().add("File read with alerts");
             }
         } else {
-            result.getResult().setStatus(EStatus.SUCCESS);
+            result.getResult().setStatus(StatusImport.SUCCESS);
             result.getResult().setReadingDone(true);
             result.getResult().getInformation().add("File read with success");
         }

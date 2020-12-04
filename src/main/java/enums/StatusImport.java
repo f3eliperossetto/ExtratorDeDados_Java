@@ -1,6 +1,6 @@
 package enums;
 
-public enum EStatus {
+public enum StatusImport {
     SUCCESS,
     ALERTS,
     ERROR

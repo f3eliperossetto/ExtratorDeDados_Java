@@ -1,10 +1,10 @@
 package Tests.Service;
 
 import enums.InstanceRegistryHandler;
-import abstractions.Handler;
+import wrappers.WrapperDataFileHandler;
 import FileModels.BankDataFile;
 
-public class BankDataHandler extends Handler<BankDataFile> {
+public class BankDataFileHandler extends WrapperDataFileHandler<BankDataFile> {
 
     private static final String clientData = "00";
     private static final String financialData = "02";
@@ -18,7 +18,7 @@ public class BankDataHandler extends Handler<BankDataFile> {
     }
 
     @Override
-    public BankDataFile newInstance() {
+    public BankDataFile getNewInstance() {
         return new BankDataFile();
     }
 }
