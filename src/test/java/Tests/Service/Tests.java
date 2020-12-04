@@ -1,7 +1,7 @@
 package Tests.Service;
 
 import enums.StatusImport;
-import services.IExtract;
+import services.Extractable;
 import models.CommandResult;
 import services.ExtractService;
 import FileModels.BankDataFile;
@@ -17,7 +17,7 @@ public class Tests {
     }
 
     private final String path = new File("src/test/resources").getAbsolutePath() + "\\";
-    private final IExtract<BankDataFile> service;
+    private final Extractable<BankDataFile> service;
 
     @Test
     public void ShouldExtractAllRecords() {

@@ -10,7 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Optional;
 
-public class ExtractService<T> implements IExtract<T> {
+public class ExtractService<T> implements Extractable<T> {
     private final DataFileHandler<T> dataFileHandler;
 
     public ExtractService(DataFileHandler<T> dataFileHandler) {
