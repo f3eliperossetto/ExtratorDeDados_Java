@@ -1,13 +1,13 @@
 package models;
 
+import delegators.Action;
+import delegators.Predicate;
 import enums.InstanceRegistryHandler;
 
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class CommandHandler {
 
-    public CommandHandler(Predicate<String> checkLineData, Consumer<String> fillObject, InstanceRegistryHandler registryType) {
+    public CommandHandler(Predicate<String> checkLineData, Action<String> fillObject, InstanceRegistryHandler registryType) {
         this.checkLineData = checkLineData;
         this.fillObject = fillObject;
         this.registryType = registryType;
@@ -15,14 +15,14 @@ public class CommandHandler {
 
 
     private final Predicate<String> checkLineData;
-    private final Consumer<String> fillObject;
+    private final Action<String> fillObject;
     private final InstanceRegistryHandler registryType;
 
     public Predicate<String> getCheckLineData() {
         return checkLineData;
     }
 
-    public Consumer<String> getFillObject() {
+    public Action<String> getFillObject() {
         return fillObject;
     }
 

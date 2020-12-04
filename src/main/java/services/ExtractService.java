@@ -26,6 +26,7 @@ public class ExtractService<T> implements IExtract<T> {
             if (!dataFileHandler.getAll().isEmpty())
                 dataFileHandler.dispose();
 
+
             String lineArchive;
 
             while ((lineArchive = reader.readLine()) != null) {
@@ -33,7 +34,7 @@ public class ExtractService<T> implements IExtract<T> {
                 String finalLineArchive = lineArchive;
 
                 Optional<CommandHandler> command = dataFileHandler.getCommands().stream()
-                        .filter(cm -> cm.getCheckLineData().test(finalLineArchive)).findFirst();
+                        .filter(cm -> cm.getCheckLineData().invoke(finalLineArchive)).findFirst();
 
                 if (command.isPresent())
                     runCommand(result, cont, lineArchive, command.get());
@@ -56,7 +57,7 @@ public class ExtractService<T> implements IExtract<T> {
                 dataFileHandler.set(dataFileHandler::getNewInstance);
                 dataFileHandler.add();
             }
-            command.getFillObject().accept(lineArchive);
+            command.getFillObject().invoke(lineArchive);
         } catch (Exception ex) {
             result.getResult().getAlerts().add("Error to get line: " + cont + " - " + lineArchive + "Error: " + ex.getMessage());
         }

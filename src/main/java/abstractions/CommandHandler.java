@@ -1,13 +1,16 @@
 package abstractions;
 
+import delegators.Action;
 import enums.InstanceRegistryHandler;
 
 import java.util.Collection;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+
+import delegators.Predicate;
 
 public interface CommandHandler {
     Collection<models.CommandHandler> getCommands();
-    void addCommand(Predicate<String> checkLineData, Consumer<String> getRecordsFromLine, InstanceRegistryHandler instanceRegistryHandler);
-    void addCommand(Predicate<String> checkKineData, Consumer<String> getRecordsFromLine);
+
+    void addCommand(Predicate<String> checkLineData, Action<String> getRecordsFromLine, InstanceRegistryHandler instanceRegistryHandler);
+
+    void addCommand(Predicate<String> checkKineData, Action<String> getRecordsFromLine);
 }
