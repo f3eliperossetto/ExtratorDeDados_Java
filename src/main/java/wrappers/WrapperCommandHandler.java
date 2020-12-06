@@ -2,19 +2,18 @@ package wrappers;
 
 import delegators.Action;
 import delegators.Predicate;
-import abstractions.DataFileHandler;
+import abstractions.CommandHandler;
 import delegators.Func;
 import enums.InstanceRegistryHandler;
-import models.CommandHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class WrapperDataFileHandler<T> implements DataFileHandler<T> {
+public abstract class WrapperCommandHandler<T> implements CommandHandler<T> {
     protected T registry;
     private List<T> registries;
-    private final List<CommandHandler> commands;
+    private final List<models.CommandHandler> commands;
 
     @Override
     public List<T> getAll() {
@@ -22,7 +21,7 @@ public abstract class WrapperDataFileHandler<T> implements DataFileHandler<T> {
     }
 
     @Override
-    public Collection<CommandHandler> getCommands() {
+    public Collection<models.CommandHandler> getCommands() {
         return commands;
     }
 
@@ -31,10 +30,10 @@ public abstract class WrapperDataFileHandler<T> implements DataFileHandler<T> {
         this.registry = func.invoke();
     }
 
-    protected WrapperDataFileHandler() {
+    protected WrapperCommandHandler() {
         registries = new ArrayList<>();
         commands = new ArrayList<>();
-        setBuildingFile();
+        buildCommands();
     }
 
     @Override
@@ -49,11 +48,11 @@ public abstract class WrapperDataFileHandler<T> implements DataFileHandler<T> {
 
     @Override
     public void addCommand(Predicate<String> checkLineData, Action<String> getRecordsFromLine, InstanceRegistryHandler instanceRegistryHandler) {
-        commands.add(new CommandHandler(checkLineData, getRecordsFromLine, instanceRegistryHandler));
+        commands.add(new models.CommandHandler(checkLineData, getRecordsFromLine, instanceRegistryHandler));
     }
 
     @Override
     public void addCommand(Predicate<String> checkKineData, Action<String> getRecordsFromLine) {
-        commands.add(new CommandHandler(checkKineData, getRecordsFromLine, InstanceRegistryHandler.DO_NOT_CREATE_INSTANCE));
+        commands.add(new models.CommandHandler(checkKineData, getRecordsFromLine, InstanceRegistryHandler.DO_NOT_CREATE_INSTANCE));
     }
 }

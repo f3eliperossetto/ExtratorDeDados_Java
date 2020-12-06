@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class Tests {
     public Tests() {
-        service = new ExtractService<>(new BankDataFileHandler());
+        service = new ExtractService<>(new BankCommandHandler());
     }
 
     private final String path = new File("src/test/resources").getAbsolutePath() + "\\";

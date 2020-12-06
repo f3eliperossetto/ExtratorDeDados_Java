@@ -1,9 +1,8 @@
 package services;
 
-import abstractions.DataFileHandler;
+import abstractions.CommandHandler;
 import enums.InstanceRegistryHandler;
 import enums.StatusImport;
-import models.CommandHandler;
 import models.CommandResult;
 
 import java.io.BufferedReader;
@@ -11,10 +10,10 @@ import java.io.FileReader;
 import java.util.Optional;
 
 public class ExtractService<T> implements Extractable<T> {
-    private final DataFileHandler<T> dataFileHandler;
+    private final CommandHandler<T> commandHandler;
 
-    public ExtractService(DataFileHandler<T> dataFileHandler) {
-        this.dataFileHandler = dataFileHandler;
+    public ExtractService(CommandHandler<T> commandHandler) {
+        this.commandHandler = commandHandler;
     }
 
     @Override
@@ -23,8 +22,8 @@ public class ExtractService<T> implements Extractable<T> {
         int cont = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            if (!dataFileHandler.getAll().isEmpty())
-                dataFileHandler.dispose();
+            if (!commandHandler.getAll().isEmpty())
+                commandHandler.dispose();
 
 
             String lineArchive;
@@ -33,7 +32,7 @@ public class ExtractService<T> implements Extractable<T> {
 
                 String finalLineArchive = lineArchive;
 
-                Optional<CommandHandler> command = dataFileHandler.getCommands().stream()
+                Optional<models.CommandHandler> command = commandHandler.getCommands().stream()
                         .filter(cm -> cm.getCheckLineData().invoke(finalLineArchive)).findFirst();
 
                 if (command.isPresent())
@@ -47,15 +46,15 @@ public class ExtractService<T> implements Extractable<T> {
             result.getResult().getErrors().add("Line " + cont + ex.getMessage());
         }
         setExtractionStatus(result);
-        result.setData(dataFileHandler.getAll());
+        result.setData(commandHandler.getAll());
         return result;
     }
 
-    private void runCommand(CommandResult<T> result, int cont, String lineArchive, CommandHandler command) {
+    private void runCommand(CommandResult<T> result, int cont, String lineArchive, models.CommandHandler command) {
         try {
             if (command.getInstanceRegistryHandler() == InstanceRegistryHandler.CREATE_NEW_REGISTRY_INSTANCE) {
-                dataFileHandler.set(dataFileHandler::getNewInstance);
-                dataFileHandler.add();
+                commandHandler.set(commandHandler::getNewInstance);
+                commandHandler.add();
             }
             command.getFillObject().invoke(lineArchive);
         } catch (Exception ex) {
