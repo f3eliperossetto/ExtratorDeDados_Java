@@ -1,9 +1,9 @@
 package wrappers;
 
-import delegators.Action;
-import delegators.Predicate;
+import functionals.Action;
+import functionals.Predicate;
 import abstractions.CommandHandler;
-import delegators.Func;
+import functionals.Func;
 import enums.InstanceRegistryHandler;
 
 import java.util.ArrayList;

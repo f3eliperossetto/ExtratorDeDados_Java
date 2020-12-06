@@ -1,7 +1,7 @@
 package abstractions;
 
-import delegators.Action;
-import delegators.Predicate;
+import functionals.Action;
+import functionals.Predicate;
 import enums.InstanceRegistryHandler;
 
 import java.util.Collection;
