@@ -8,16 +8,30 @@ import models.CommandResult;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 public class ExtractService<T> implements Extractable<T> {
     private final CommandHandler<T> commandHandler;
+    private String path;
 
     public ExtractService(CommandHandler<T> commandHandler) {
         this.commandHandler = commandHandler;
     }
 
     @Override
+    public Future<CommandResult<T>> loadDataFromFileAsync(String path) {
+        this.path = path;
+        return CompletableFuture.supplyAsync(this::execute);
+    }
+
+    @Override
     public CommandResult<T> loadDataFromFile(String path) {
+        this.path = path;
+        return execute();
+    }
+
+    private CommandResult<T> execute() {
         CommandResult<T> result = new CommandResult<>();
         int cont = 0;
 
@@ -35,17 +49,20 @@ public class ExtractService<T> implements Extractable<T> {
                 Optional<models.CommandHandler> command = commandHandler.getCommands().stream()
                         .filter(cm -> cm.getCheckLineData().invoke(finalLineArchive)).findFirst();
 
-                if (command.isPresent())
+                if (command.isPresent()) {
                     runCommand(result, cont, lineArchive, command.get());
-                else
-                    result.getResult().getAlerts().add("Line " + cont + " - " + lineArchive + ", not mapped to an entity");
+                } else {
+                    result.getResult().getMessages().add("Line " + cont + " not mapped to an entity, check if you set the command on package abstractions.buildCommands ");
+                    result.getResult().setStatus(StatusImport.ALERTS);
+                }
 
                 cont++;
             }
         } catch (Exception ex) {
-            result.getResult().getErrors().add("Line " + cont + ex.getMessage());
+            result.getResult().getMessages().add(ex.getMessage());
+            result.getResult().setReadingDone(false);
+            result.getResult().setStatus(StatusImport.ERROR);
         }
-        setExtractionStatus(result);
         result.setData(commandHandler.getAll());
         return result;
     }
@@ -58,24 +75,9 @@ public class ExtractService<T> implements Extractable<T> {
             }
             command.getFillObject().invoke(lineArchive);
         } catch (Exception ex) {
-            result.getResult().getAlerts().add("Error to get line: " + cont + " - " + lineArchive + "Error: " + ex.getMessage());
+            result.getResult().setStatus(StatusImport.ALERTS);
+            result.getResult().getMessages().add("Error to get line: " + cont + " - " + lineArchive + " - " + "Error: " + ex.getMessage());
         }
     }
 
-    private void setExtractionStatus(CommandResult<T> result) {
-        if (!result.getResult().getErrors().isEmpty() || !result.getResult().getAlerts().isEmpty()) {
-            if (!result.getResult().getErrors().isEmpty() || (result.getResult().getAlerts().isEmpty())) {
-                result.getResult().setStatus(StatusImport.ERROR);
-                result.getResult().setReadingDone(false);
-            } else {
-                result.getResult().setStatus(StatusImport.ALERTS);
-                result.getResult().setReadingDone(true);
-                result.getResult().getInformation().add("File read with alerts");
-            }
-        } else {
-            result.getResult().setStatus(StatusImport.SUCCESS);
-            result.getResult().setReadingDone(true);
-            result.getResult().getInformation().add("File read with success");
-        }
-    }
 }

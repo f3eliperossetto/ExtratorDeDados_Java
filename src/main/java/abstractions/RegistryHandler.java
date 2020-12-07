@@ -1,6 +1,6 @@
 package abstractions;
 
-import functionals.Func;
+import delegators.Func;
 
 import java.util.List;
 

@@ -7,11 +7,9 @@ import java.util.List;
 
 public class Result {
     public Result() {
-
-        errors = new ArrayList<>();
-        alerts = new ArrayList<>();
-        information = new ArrayList<>();
-
+        messages = new ArrayList<>();
+        status = StatusImport.SUCCESS;
+        readingDone = true;
     }
 
     public void setStatus(StatusImport status) {
@@ -22,16 +20,8 @@ public class Result {
         this.readingDone = readingDone;
     }
 
-    public List<String> getErrors() {
-        return errors;
-    }
-
-    public List<String> getAlerts() {
-        return alerts;
-    }
-
-    public List<String> getInformation() {
-        return information;
+    public List<String> getMessages() {
+        return messages;
     }
 
     public boolean getIsReadingDone() {
@@ -44,9 +34,7 @@ public class Result {
 
     private StatusImport status;
     private boolean readingDone;
-    private final List<String> errors;
-    private final List<String> alerts;
-    private final List<String> information;
+    private final List<String> messages;
 }
 
 
