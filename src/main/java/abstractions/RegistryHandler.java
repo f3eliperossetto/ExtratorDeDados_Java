@@ -2,12 +2,13 @@ package abstractions;
 
 import fcuntionalInterfaces.Func;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface RegistryHandler<T> {
+
     void set(Func<T> func);
 
-    List<T> getAll();
+    Collection<T> getAll();
 
     T getNewInstance();
 

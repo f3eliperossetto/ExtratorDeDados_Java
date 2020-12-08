@@ -4,6 +4,8 @@ import fcuntionalInterfaces.Action;
 import fcuntionalInterfaces.Predicate;
 import enums.InstanceRegistryHandler;
 
+import java.util.Objects;
+
 
 public class CommandHandler {
 
@@ -30,4 +32,16 @@ public class CommandHandler {
         return instanceRegistryHandler;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CommandHandler)) return false;
+        CommandHandler that = (CommandHandler) o;
+        return checkLineData.equals(that.checkLineData) && fillObject.equals(that.fillObject) && instanceRegistryHandler == that.instanceRegistryHandler;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(checkLineData, fillObject, instanceRegistryHandler);
+    }
 }

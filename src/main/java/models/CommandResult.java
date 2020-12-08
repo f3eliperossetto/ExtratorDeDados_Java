@@ -2,14 +2,15 @@ package models;
 
 import enums.StatusImport;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
 
 public class CommandResult<T> {
 
     public CommandResult() {
-        data = new ArrayList<>();
-        messages = new ArrayList<>();
+        data = new HashSet<>();
+        messages = new HashSet<>();
         status = StatusImport.SUCCESS;
         readingDone = true;
     }
@@ -48,4 +49,16 @@ public class CommandResult<T> {
     private boolean readingDone;
     private final Collection<String> messages;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CommandResult)) return false;
+        CommandResult<?> that = (CommandResult<?>) o;
+        return readingDone == that.readingDone && data.equals(that.data) && status == that.status && messages.equals(that.messages);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(data, status, readingDone, messages);
+    }
 }

@@ -5,17 +5,16 @@ import fcuntionalInterfaces.Predicate;
 import fcuntionalInterfaces.Func;
 import enums.InstanceRegistryHandler;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 
 public abstract class AbstractCommandHandler<T> implements CommandHandler<T> {
     protected T registry;
-    private List<T> registries;
-    private final List<models.CommandHandler> commands;
+    private Collection<T> registries;
+    private final Collection<models.CommandHandler> commands;
 
     @Override
-    public List<T> getAll() {
+    public Collection<T> getAll() {
         return registries;
     }
 
@@ -30,8 +29,8 @@ public abstract class AbstractCommandHandler<T> implements CommandHandler<T> {
     }
 
     protected AbstractCommandHandler() {
-        registries = new ArrayList<>();
-        commands = new ArrayList<>();
+        registries = new HashSet<>();
+        commands = new HashSet<>();
         buildCommands();
     }
 
@@ -42,7 +41,7 @@ public abstract class AbstractCommandHandler<T> implements CommandHandler<T> {
 
     @Override
     public void dispose() {
-        registries = new ArrayList<>();
+        registries = new HashSet<>();
     }
 
     @Override
