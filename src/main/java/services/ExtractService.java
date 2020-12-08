@@ -52,16 +52,16 @@ public class ExtractService<T> implements Extractable<T> {
                 if (command.isPresent()) {
                     runCommand(result, cont, lineArchive, command.get());
                 } else {
-                    result.getResult().getMessages().add("Line " + cont + " not mapped to an entity, check if you set the command on package abstractions.buildCommands ");
-                    result.getResult().setStatus(StatusImport.ALERTS);
+                    result.getMessages().add("Line " + cont + " not mapped to an entity, check if you set the command on package abstractions.buildCommands ");
+                    result.setStatus(StatusImport.ALERTS);
                 }
 
                 cont++;
             }
         } catch (Exception ex) {
-            result.getResult().getMessages().add(ex.getMessage());
-            result.getResult().setReadingDone(false);
-            result.getResult().setStatus(StatusImport.ERROR);
+            result.getMessages().add(ex.getMessage());
+            result.setReadingDone(false);
+            result.setStatus(StatusImport.ERROR);
         }
         result.setData(commandHandler.getAll());
         return result;
@@ -75,8 +75,8 @@ public class ExtractService<T> implements Extractable<T> {
             }
             command.getFillObject().invoke(lineArchive);
         } catch (Exception ex) {
-            result.getResult().setStatus(StatusImport.ALERTS);
-            result.getResult().getMessages().add("Error to get line: " + cont + " - " + lineArchive + " - " + "Error: " + ex.getMessage());
+            result.setStatus(StatusImport.ALERTS);
+            result.getMessages().add("Error to get line: " + cont + " - " + lineArchive + " - " + "Error: " + ex.getMessage());
         }
     }
 

@@ -1,10 +1,10 @@
-package Tests.Service;
+package tests;
 
 import enums.StatusImport;
 import services.Extractable;
 import models.CommandResult;
 import services.ExtractService;
-import FileModels.BankDataFile;
+import filemodels.BankDataFile;
 import org.junit.Test;
 
 
@@ -17,6 +17,7 @@ import java.util.concurrent.TimeoutException;
 import static org.junit.Assert.*;
 
 public class SampleTest {
+
     public SampleTest() {
         service = new ExtractService<>(new BankCommandHandler());
     }
@@ -28,8 +29,8 @@ public class SampleTest {
     public void ShouldExtractAllRecords() {
         CommandResult<BankDataFile> result = service.loadDataFromFile(path + "Success.txt");
         assertNotNull(result);
-        assertTrue(result.getResult().getIsReadingDone());
-        assertEquals(StatusImport.SUCCESS, result.getResult().getStatus());
+        assertTrue(result.getIsReadingDone());
+        assertEquals(StatusImport.SUCCESS, result.getStatus());
     }
 
     @Test
@@ -37,24 +38,25 @@ public class SampleTest {
         Future<CommandResult<BankDataFile>> resultFuture = service.loadDataFromFileAsync(path + "Success.txt");
         CommandResult<BankDataFile> result = resultFuture.get(30, TimeUnit.SECONDS);
         assertNotNull(result);
-        assertTrue(result.getResult().getIsReadingDone());
-        assertEquals(StatusImport.SUCCESS, result.getResult().getStatus());
+        assertTrue(result.getIsReadingDone());
+        assertEquals(StatusImport.SUCCESS, result.getStatus());
     }
 
     @Test
     public void ShouldExtractAllRecordsWithAlerts() {
         CommandResult<BankDataFile> result = service.loadDataFromFile(path + "Alerts.txt");
         assertNotNull(result);
-        assertTrue(result.getResult().getIsReadingDone());
-        assertFalse(result.getResult().getMessages().isEmpty());
-        assertEquals(StatusImport.ALERTS, result.getResult().getStatus());
+        assertTrue(result.getIsReadingDone());
+        assertFalse(result.getMessages().isEmpty());
+        assertEquals(StatusImport.ALERTS, result.getStatus());
     }
+
     @Test
     public void ShouldExtractAllRecordsWithErrors() {
         CommandResult<BankDataFile> result = service.loadDataFromFile(path + "Errors.txt");
         assertNotNull(result);
-        assertFalse(result.getResult().getIsReadingDone());
-        assertEquals(StatusImport.ERROR, result.getResult().getStatus());
+        assertFalse(result.getIsReadingDone());
+        assertEquals(StatusImport.ERROR, result.getStatus());
     }
 
 }

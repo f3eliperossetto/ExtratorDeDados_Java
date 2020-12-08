@@ -1,7 +1,7 @@
 package models;
 
-import delegators.Action;
-import delegators.Predicate;
+import fcuntionalInterfaces.Action;
+import fcuntionalInterfaces.Predicate;
 import enums.InstanceRegistryHandler;
 
 

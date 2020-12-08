@@ -1,10 +1,10 @@
-package Tests.Service;
+package tests;
 
 import enums.InstanceRegistryHandler;
-import wrappers.WrapperCommandHandler;
-import FileModels.BankDataFile;
+import abstractions.AbstractCommandHandler;
+import filemodels.BankDataFile;
 
-public class BankCommandHandler extends WrapperCommandHandler<BankDataFile> {
+public class BankCommandHandler extends AbstractCommandHandler<BankDataFile> {
 
     private static final String clientData = "00";
     private static final String financialData = "02";

@@ -1,4 +1,4 @@
-package FileModels;
+package filemodels;
 
 public class BankData {
     public void fillData(String value){

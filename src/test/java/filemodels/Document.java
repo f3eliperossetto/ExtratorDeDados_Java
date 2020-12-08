@@ -1,4 +1,4 @@
-package FileModels;
+package filemodels;
 
 public class Document {
 

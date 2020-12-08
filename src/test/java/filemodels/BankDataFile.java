@@ -1,4 +1,4 @@
-package FileModels;
+package filemodels;
 
 import java.util.ArrayList;
 import java.util.List;

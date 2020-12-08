@@ -1,16 +1,15 @@
-package wrappers;
+package abstractions;
 
-import delegators.Action;
-import delegators.Predicate;
-import abstractions.CommandHandler;
-import delegators.Func;
+import fcuntionalInterfaces.Action;
+import fcuntionalInterfaces.Predicate;
+import fcuntionalInterfaces.Func;
 import enums.InstanceRegistryHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class WrapperCommandHandler<T> implements CommandHandler<T> {
+public abstract class AbstractCommandHandler<T> implements CommandHandler<T> {
     protected T registry;
     private List<T> registries;
     private final List<models.CommandHandler> commands;
@@ -30,7 +29,7 @@ public abstract class WrapperCommandHandler<T> implements CommandHandler<T> {
         this.registry = func.invoke();
     }
 
-    protected WrapperCommandHandler() {
+    protected AbstractCommandHandler() {
         registries = new ArrayList<>();
         commands = new ArrayList<>();
         buildCommands();
