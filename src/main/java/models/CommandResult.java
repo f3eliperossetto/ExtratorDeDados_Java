@@ -3,7 +3,7 @@ package models;
 import enums.StatusImport;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 public class CommandResult<T> {
 
@@ -14,14 +14,13 @@ public class CommandResult<T> {
         readingDone = true;
     }
 
-
-    public List<T> getData() {
+    public Collection<T> getData() {
         return data;
     }
 
-    private List<T> data;
+    private Collection<T> data;
 
-    public void setData(List<T> data) {
+    public void setData(Collection<T> data) {
         this.data = data;
     }
 
@@ -33,7 +32,7 @@ public class CommandResult<T> {
         this.readingDone = readingDone;
     }
 
-    public List<String> getMessages() {
+    public Collection<String> getMessages() {
         return messages;
     }
 
@@ -47,6 +46,6 @@ public class CommandResult<T> {
 
     private StatusImport status;
     private boolean readingDone;
-    private final List<String> messages;
+    private final Collection<String> messages;
 
 }

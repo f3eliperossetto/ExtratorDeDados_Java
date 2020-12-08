@@ -37,7 +37,7 @@ public class SampleTest {
     public void ShouldExtractAllRecordsAsync() throws InterruptedException, ExecutionException, TimeoutException {
         Future<CommandResult<BankDataFile>> resultFuture = service.loadDataFromFileAsync(path + "Success.txt");
         CommandResult<BankDataFile> result = resultFuture.get(30, TimeUnit.SECONDS);
-        assertNotNull(result);
+        assertNotNull(result.getData());
         assertTrue(result.getIsReadingDone());
         assertEquals(StatusImport.SUCCESS, result.getStatus());
     }
