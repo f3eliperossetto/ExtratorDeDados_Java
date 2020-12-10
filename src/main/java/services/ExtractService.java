@@ -3,6 +3,7 @@ package services;
 import abstractions.CommandHandler;
 import enums.InstanceRegistryHandler;
 import enums.StatusImport;
+import models.CommandHandlerModel;
 import models.CommandResult;
 
 import java.io.BufferedReader;
@@ -39,14 +40,13 @@ public class ExtractService<T> implements Extractable<T> {
             if (!commandHandler.getAll().isEmpty())
                 commandHandler.dispose();
 
-
             String lineArchive;
 
             while ((lineArchive = reader.readLine()) != null) {
 
                 String finalLineArchive = lineArchive;
 
-                Optional<models.CommandHandler> command = commandHandler.getCommands().stream()
+                Optional<CommandHandlerModel> command = commandHandler.getCommands().stream()
                         .filter(cm -> cm.getCheckLineData().invoke(finalLineArchive)).findFirst();
 
                 if (command.isPresent()) {
@@ -67,7 +67,7 @@ public class ExtractService<T> implements Extractable<T> {
         return result;
     }
 
-    private void runCommand(CommandResult<T> result, int cont, String lineArchive, models.CommandHandler command) {
+    private void runCommand(CommandResult<T> result, int cont, String lineArchive, CommandHandlerModel command) {
         try {
             if (command.getInstanceRegistryHandler() == InstanceRegistryHandler.CREATE_NEW_REGISTRY_INSTANCE) {
                 commandHandler.set(commandHandler::getNewInstance);

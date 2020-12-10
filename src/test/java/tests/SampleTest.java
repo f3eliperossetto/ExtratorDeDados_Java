@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class SampleTest {
 
     public SampleTest() {
-        service = new ExtractService<>(new BankCommandHandler());
+        service = new ExtractService<>(new BankDataFileHandler());
     }
 
     private final String path = new File("src/test/resources").getAbsolutePath() + "\\";
@@ -32,6 +32,7 @@ public class SampleTest {
         assertTrue(result.getIsReadingDone());
         assertEquals(StatusImport.SUCCESS, result.getStatus());
     }
+
 
     @Test
     public void ShouldExtractAllRecordsAsync() throws InterruptedException, ExecutionException, TimeoutException {
