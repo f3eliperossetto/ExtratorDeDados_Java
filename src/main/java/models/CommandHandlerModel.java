@@ -1,7 +1,7 @@
 package models;
 
-import fucntionalInterfaces.Action;
-import fucntionalInterfaces.Predicate;
+import function.Action;
+import function.Predicate;
 import enums.InstanceRegistryHandler;
 
 

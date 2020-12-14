@@ -1,9 +1,9 @@
 package abstractions;
 
 import enums.InstanceRegistryHandler;
-import fucntionalInterfaces.Action;
-import fucntionalInterfaces.Func;
-import fucntionalInterfaces.Predicate;
+import function.Action;
+import function.Func;
+import function.Predicate;
 import models.CommandHandlerModel;
 
 import java.util.ArrayList;

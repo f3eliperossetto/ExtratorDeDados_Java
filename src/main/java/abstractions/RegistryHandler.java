@@ -1,6 +1,6 @@
 package abstractions;
 
-import fucntionalInterfaces.Func;
+import function.Func;
 
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
