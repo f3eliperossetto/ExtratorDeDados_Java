@@ -1,7 +1,6 @@
 package tests;
 
 import enums.StatusImport;
-import repository.ExtractRepository;
 import services.Extractable;
 import models.CommandResult;
 import services.ExtractService;

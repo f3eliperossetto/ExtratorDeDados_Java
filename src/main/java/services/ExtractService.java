@@ -25,11 +25,9 @@ public class ExtractService<T> implements Extractable<T> {
         CommandResult<T> result = new CommandResult<>();
         int cont = 0;
         try (commandHandler) {
+            for (String line : repository.readAllLines(filePath)) {
 
-            for (String line : repository.readAll(filePath)) {
-
-                Optional<CommandHandlerModel> command = commandHandler.getCommands().stream()
-                        .filter(cm -> cm.getCheckLineData().invoke(line)).findFirst();
+                Optional<CommandHandlerModel> command = getCommandHandlerModel(line);
 
                 if (command.isPresent()) {
                     runCommand(result, cont, line, command.get());
@@ -39,11 +37,16 @@ public class ExtractService<T> implements Extractable<T> {
                 }
                 cont++;
             }
-
             result.setData(commandHandler.getAll());
+            return  result;
         }
 
-        return result;
+    }
+
+
+    private Optional<CommandHandlerModel> getCommandHandlerModel(String line) {
+        return commandHandler.getCommands().stream()
+                .filter(cm -> cm.getCheckLineData().invoke(line)).findFirst();
     }
 
     private void runCommand(CommandResult<T> result, int cont, String lineArchive, CommandHandlerModel command) {
