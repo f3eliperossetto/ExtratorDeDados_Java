@@ -3,67 +3,46 @@ package services;
 import abstractions.CommandHandler;
 import enums.InstanceRegistryHandler;
 import enums.StatusImport;
+import factories.FactoryRepository;
 import models.CommandHandlerModel;
 import models.CommandResult;
+import repository.Repository;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.IOException;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 public class ExtractService<T> implements Extractable<T> {
     private final CommandHandler<T> commandHandler;
-    private String path;
+    private final Repository repository;
 
     public ExtractService(CommandHandler<T> commandHandler) {
         this.commandHandler = commandHandler;
+        this.repository = FactoryRepository.buildRepository();
     }
 
     @Override
-    public Future<CommandResult<T>> loadDataFromFileAsync(String path) {
-        this.path = path;
-        return CompletableFuture.supplyAsync(this::execute);
-    }
-
-    @Override
-    public CommandResult<T> loadDataFromFile(String path) {
-        this.path = path;
-        return execute();
-    }
-
-    private CommandResult<T> execute() {
+    public CommandResult<T> loadDataFromFile(String filePath) throws IOException {
         CommandResult<T> result = new CommandResult<>();
         int cont = 0;
+        try (commandHandler) {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            if (!commandHandler.getAll().isEmpty())
-                commandHandler.dispose();
-
-            String lineArchive;
-
-            while ((lineArchive = reader.readLine()) != null) {
-
-                String finalLineArchive = lineArchive;
+            for (String line : repository.readAll(filePath)) {
 
                 Optional<CommandHandlerModel> command = commandHandler.getCommands().stream()
-                        .filter(cm -> cm.getCheckLineData().invoke(finalLineArchive)).findFirst();
+                        .filter(cm -> cm.getCheckLineData().invoke(line)).findFirst();
 
                 if (command.isPresent()) {
-                    runCommand(result, cont, lineArchive, command.get());
+                    runCommand(result, cont, line, command.get());
                 } else {
                     result.getMessages().add("Line " + cont + " not mapped to an entity, check if you set the command on package abstractions.buildCommands ");
                     result.setStatus(StatusImport.ALERTS);
                 }
-
                 cont++;
             }
-        } catch (Exception ex) {
-            result.getMessages().add(ex.getMessage());
-            result.setReadingDone(false);
-            result.setStatus(StatusImport.ERROR);
+
+            result.setData(commandHandler.getAll());
         }
-        result.setData(commandHandler.getAll());
+
         return result;
     }
 

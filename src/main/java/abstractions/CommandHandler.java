@@ -1,8 +1,8 @@
 package abstractions;
 
 import enums.InstanceRegistryHandler;
-import fcuntionalInterfaces.Action;
-import fcuntionalInterfaces.Predicate;
+import fucntionalInterfaces.Action;
+import fucntionalInterfaces.Predicate;
 import models.CommandHandlerModel;
 
 import java.util.Collection;

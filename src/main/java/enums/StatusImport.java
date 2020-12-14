@@ -2,8 +2,7 @@ package enums;
 
 public enum StatusImport {
     SUCCESS,
-    ALERTS,
-    ERROR
+    ALERTS
 }
 
 

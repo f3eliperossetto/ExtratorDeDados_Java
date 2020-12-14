@@ -1,14 +1,13 @@
 package abstractions;
 
 import enums.InstanceRegistryHandler;
-import fcuntionalInterfaces.Action;
-import fcuntionalInterfaces.Func;
-import fcuntionalInterfaces.Predicate;
+import fucntionalInterfaces.Action;
+import fucntionalInterfaces.Func;
+import fucntionalInterfaces.Predicate;
 import models.CommandHandlerModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 public abstract class Handler<T> implements CommandHandler<T> {
 
@@ -38,7 +37,8 @@ public abstract class Handler<T> implements CommandHandler<T> {
     }
 
     @Override
-    public void dispose() {
+    public void close(){
+        this.registry = null;
         registries = new ArrayList<>();
     }
 

@@ -1,11 +1,12 @@
 package abstractions;
 
-import fcuntionalInterfaces.Func;
+import fucntionalInterfaces.Func;
 
+import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-public interface RegistryHandler<T> {
+public interface RegistryHandler<T> extends Closeable {
 
     void set(Func<T> func) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
 
@@ -14,6 +15,4 @@ public interface RegistryHandler<T> {
     T getNewInstance();
 
     void add();
-
-    void dispose();
 }

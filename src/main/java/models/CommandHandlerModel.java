@@ -1,10 +1,8 @@
 package models;
 
-import fcuntionalInterfaces.Action;
-import fcuntionalInterfaces.Predicate;
+import fucntionalInterfaces.Action;
+import fucntionalInterfaces.Predicate;
 import enums.InstanceRegistryHandler;
-
-import java.util.Objects;
 
 
 public class CommandHandlerModel {
